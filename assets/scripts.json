@@ -1,0 +1,46 @@
+{
+  "screenplays": [
+    {
+      "id": 1,
+      "title": "The Last Station",
+      "type": "Feature",
+      "genre": "Drama / Thriller",
+      "logline": "A retired railway conductor discovers a conspiracy that threatens the very foundation of his small town's existence."
+    },
+    {
+      "id": 2,
+      "title": "Monsoon Memories",
+      "type": "Series",
+      "genre": "Family Drama / Mystery",
+      "logline": "Three generations of women unravel family secrets during one transformative monsoon season."
+    },
+    {
+      "id": 3,
+      "title": "Between Worlds",
+      "type": "Feature",
+      "genre": "Sci-Fi / Drama",
+      "logline": "A quantum physicist's experiment goes awry, leaving her stranded between parallel realities."
+    },
+    {
+      "id": 4,
+      "title": "The Ferryman",
+      "type": "Short",
+      "genre": "Fantasy / Drama",
+      "logline": "A mystical boatman guides souls across a river, but one passenger changes everything."
+    },
+    {
+      "id": 5,
+      "title": "Silent Echoes",
+      "type": "Feature",
+      "genre": "Psychological Thriller",
+      "logline": "A sound designer begins hearing voices that predict tragic events before they occur."
+    },
+    {
+      "id": 6,
+      "title": "City of Shadows",
+      "type": "Series",
+      "genre": "Crime / Noir",
+      "logline": "A corrupt city's underbelly comes alive through the eyes of a journalist seeking redemption."
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "films": [
+    {
+      "id": 1,
+      "title": "Whispers in the Wind",
+      "year": 2023,
+      "poster": "https://images.unsplash.com/photo-1594908900066-3f47337549d8?w=800&h=600&fit=crop",
+      "description": "A poignant tale of love and loss set against the backdrop of rural India, exploring themes of tradition and modernity.",
+      "platforms": [
+        {
+          "name": "Netflix",
+          "icon": "fab fa-youtube"
+        },
+        {
+          "name": "Prime",
+          "icon": "fab fa-amazon"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Midnight Chronicles",
+      "year": 2022,
+      "poster": "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=800&h=600&fit=crop",
+      "description": "A neo-noir thriller following a detective's descent into the criminal underworld of Mumbai.",
+      "platforms": [
+        {
+          "name": "Hotstar",
+          "icon": "fab fa-hotjar"
+        },
+        {
+          "name": "Prime",
+          "icon": "fab fa-amazon"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "The Silent Horizon",
+      "year": 2021,
+      "poster": "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=800&h=600&fit=crop",
+      "description": "An experimental meditation on isolation and connection in the digital age, told through minimal dialogue.",
+      "platforms": [
+        {
+          "name": "Netflix",
+          "icon": "fab fa-youtube"
+        }
+      ]
+    }
+  ]
+}
