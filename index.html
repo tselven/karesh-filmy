@@ -966,7 +966,7 @@
             justify-content: center;
             width: 55px;
             height: 55px;
-            margin: 0 12px;
+            margin: 5px 12px;
             border: 2px solid var(--text-secondary);
             border-radius: 50%;
             color: var(--text-secondary);
@@ -986,6 +986,7 @@
         .copyright {
             color: var(--text-secondary);
             font-size: 1rem;
+            margin-bottom: 20px;
             letter-spacing: 1px;
         }
         
@@ -1398,7 +1399,27 @@
     
     <!-- AOS (Animate On Scroll) -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    
+    <script>
+document.addEventListener("DOMContentLoaded", () => {
+    const body = document.body;
+    const heroContent = document.querySelector(".hero-content");
+
+    // Safety fallback (never trap user)
+    const MAX_WAIT = 2000;
+
+    function unlockScroll() {
+        body.classList.remove("hero-animating");
+    }
+
+    if (window.innerWidth > 768 && heroContent) {
+        heroContent.addEventListener("animationend", unlockScroll);
+        setTimeout(unlockScroll, MAX_WAIT);
+    } else {
+        unlockScroll();
+    }
+});
+</script>
+
     <script>
         // Scroll control variables
         let heroTextAnimationComplete = false;
