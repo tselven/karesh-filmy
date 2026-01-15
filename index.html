@@ -17,6 +17,9 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
+    <!-- AOS (Animate On Scroll) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
     <style>
         /* ===== CSS Variables ===== */
         :root {
@@ -63,6 +66,12 @@
         html {
             scroll-behavior: smooth;
             transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Prevent scrolling during hero text animation */
+        body.hero-animating {
+            overflow: hidden;
+            height: 100vh;
         }
         
         body {
@@ -217,25 +226,20 @@
         .navbar {
             background-color: rgba(10, 14, 39, 0.98) !important;
             backdrop-filter: blur(15px);
-            padding: 20px 0;
+            padding: 12px 0;
             transition: all 0.4s ease;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
             border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1050;
         }
 
         html.light-mode .navbar {
             background-color: rgba(255, 255, 255, 0.98) !important;
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-            border-bottom: 1px solid rgba(168, 134, 15, 0.2);
-        }
-        
-        .navbar.scrolled {
-            padding: 12px 0;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
-        }
-
-        html.light-mode .navbar.scrolled {
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            border-bottom: 1px solid rgba(168, 134, 15, 0.2);
         }
         
         .navbar-brand {
@@ -279,8 +283,8 @@
         /* ===== Hero Section ===== */
         #hero {
             position: relative;
-            height: 100vh;
             display: flex;
+            height: 100vh;
             align-items: center;
             justify-content: center;
             overflow: hidden;
@@ -306,18 +310,22 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: var(--overlay);
+            background: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, transparent 100%);
             z-index: 1;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(0px);
+            transition: all 0.1s ease-out;
         }
         
         .hero-content {
             position: absolute;
             z-index: 2;
-            text-align: left;
-            animation: fadeInUp 1.5s ease;
-            bottom: 80px;
-            left: 60px;
-            max-width: 600px;
+            text-align: center;
+            bottom: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(50%);
+            max-width: 800px;
+            width: 90%;
         }
         
         .hero-content h1 {
@@ -336,6 +344,10 @@
             font-weight: 600;
             letter-spacing: 2px;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+        }
+        
+        .hero-buttons {
+            margin-bottom: 0;
         }
         
         .hero-btn {
@@ -385,7 +397,7 @@
             margin-top: 40px;
             display: flex;
             gap: 25px;
-            justify-content: flex-start;
+            justify-content: center;
             align-items: center;
         }
         
@@ -831,7 +843,7 @@
         }
         
         .submit-btn:hover {
-            color: var(--primary-bg);
+            color: var(--text-primary);
             box-shadow: 0 10px 40px rgba(212, 175, 55, 0.4);
         }
 
@@ -910,6 +922,11 @@
         
         .contact-info {
             text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
             margin-top: 50px;
             padding: 30px;
             background: rgba(255, 255, 255, 0.02);
@@ -1055,8 +1072,10 @@
         
         @media (max-width: 768px) {
             .hero-content {
-                bottom: 60px;
-                left: 30px;
+                left: 50%;
+                bottom: auto;
+                top: 50%;
+                transform: translateX(-50%) translateY(-50%);
                 max-width: 350px;
             }
             
@@ -1078,7 +1097,7 @@
             }
             
             .hero-social {
-                justify-content: flex-start;
+                justify-content: center;
             }
             
             .hero-social a {
@@ -1104,6 +1123,12 @@
                 background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.5) 100%),
                             url('https://images.unsplash.com/photo-1485846234645-a62644f84728?w=800&h=1200&fit=crop') center/cover no-repeat;
                 background-attachment: fixed;
+            }
+
+            /* Don't lock scroll on mobile */
+            body.hero-animating {
+                overflow: auto;
+                height: auto;
             }
             
             .about-text h2 {
@@ -1137,8 +1162,8 @@
         
         @media (max-width: 576px) {
             .hero-content {
-                bottom: 40px;
-                left: 20px;
+                left: 50%;
+                transform: translateX(-50%);
                 max-width: 280px;
             }
             
@@ -1162,6 +1187,7 @@
             
             .contact-item {
                 display: flex;
+
                 margin: 15px 0;
             }
             
@@ -1183,12 +1209,12 @@
         }
     </style>
 </head>
-<body>
+<body class="hero-animating">
 
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
-            <a class="navbar-brand" href="#hero">AK</a>
+            <a class="navbar-brand" href="#hero">KF</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -1211,7 +1237,7 @@
     </nav>
 
     <!-- Floating WhatsApp Button -->
-    <a href="https://wa.me/1234567890?text=Hello%20Alex,%20I'd%20like%20to%20discuss%20a%20project" target="_blank" class="whatsapp-float" title="Chat on WhatsApp">
+    <a href="https://wa.me/1234567890?text=Hello%20Karesh,%20I'd%20like%20to%20discuss%20a%20project" target="_blank" class="whatsapp-float" title="Chat on WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
 
@@ -1227,26 +1253,26 @@
         </video>
         <div class="hero-overlay"></div>
         <div class="hero-content">
-            <h1>Karesh Filmy</h1>
-            <p class="tagline">Visual Storyteller / Film Director</p>
-            <div>
+            <h1 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="0">KARESH FILMY</h1>
+            <p class="tagline" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Visual Storyteller / Film Director</p>
+            <div class="hero-buttons" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
                 <a href="#films" class="hero-btn">View Films</a>
                 <a href="#screenplays" class="hero-btn">Screenplays</a>
             </div>
-            <div class="hero-social">
+            <div class="hero-social" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="600">
                 <a href="https://www.imdb.com/name/nm0000000/" target="_blank" title="IMDb">
                     <i class="fab fa-imdb"></i>
                 </a>
-                <a href="https://instagram.com/alexkumar" target="_blank" title="Instagram">
+                <a href="https://instagram.com/kareshfilmy" target="_blank" title="Instagram">
                     <i class="fab fa-instagram"></i>
                 </a>
-                <a href="https://vimeo.com/alexkumar" target="_blank" title="Vimeo">
+                <a href="https://vimeo.com/kareshfilmy" target="_blank" title="Vimeo">
                     <i class="fab fa-vimeo-v"></i>
                 </a>
-                <a href="https://linkedin.com/in/alexkumar" target="_blank" title="LinkedIn">
+                <a href="https://linkedin.com/in/kareshfilmy" target="_blank" title="LinkedIn">
                     <i class="fab fa-linkedin-in"></i>
                 </a>
-                <a href="https://twitter.com/alexkumar" target="_blank" title="Twitter">
+                <a href="https://twitter.com/kareshfilmy" target="_blank" title="Twitter">
                     <i class="fab fa-twitter"></i>
                 </a>
             </div>
@@ -1341,7 +1367,7 @@
                 <div class="contact-info">
                     <div class="contact-item">
                         <i class="fas fa-envelope"></i>
-                        <span>director@alexkumar.com</span>
+                        <span>director@kareshfilmy.com</span>
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-phone"></i>
@@ -1357,20 +1383,38 @@
         <div class="container">
             <div class="social-links">
                 <a href="https://www.imdb.com/name/nm0000000/" target="_blank" title="IMDb"><i class="fab fa-imdb"></i></a>
-                <a href="https://instagram.com/alexkumar" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="https://vimeo.com/alexkumar" target="_blank" title="Vimeo"><i class="fab fa-vimeo-v"></i></a>
-                <a href="https://linkedin.com/in/alexkumar" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                <a href="https://twitter.com/alexkumar" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
-                <a href="https://facebook.com/alexkumar" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://instagram.com/kareshfilmy" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://vimeo.com/kareshfilmy" target="_blank" title="Vimeo"><i class="fab fa-vimeo-v"></i></a>
+                <a href="https://linkedin.com/in/kareshfilmy" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://twitter.com/kareshfilmy" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="https://facebook.com/kareshfilmy" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
             </div>
-            <p class="copyright">&copy; 2026 Alex Kumar. All Rights Reserved.</p>
+            <p class="copyright">&copy; 2026 Karesh Filmy. All Rights Reserved. | Developed By <a href="https://tselven.com" target="_blank" style="color:white">Poologarasa Thamilselven</a></p>
         </div>
     </footer>
 
     <!-- Bootstrap 5 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     
+    <!-- AOS (Animate On Scroll) -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
     <script>
+        // Scroll control variables
+        let heroTextAnimationComplete = false;
+        let isAnimating = false;
+        const MAX_SCROLL_FOR_ANIMATION = 500; // increased for smoother, slower animation
+
+        // Initialize AOS
+        AOS.init({
+            once: false, // Animation happens every time you scroll
+            mirror: true, // Elements animate out while scrolling past them
+            offset: 0,
+            disable: function() {
+                return window.innerWidth <= 768; // Disable on mobile
+            }
+        });
+
         // Initialize theme from localStorage
         function initializeTheme() {
             const savedTheme = localStorage.getItem('theme') || 'dark';
@@ -1404,15 +1448,111 @@
         // Initialize theme on page load
         document.addEventListener('DOMContentLoaded', initializeTheme);
 
-        // Navbar scroll effect
+        // Prevent scroll during animation
+        let accumulatedScroll = 0;
+        
+        function preventScroll(e) {
+            if (!heroTextAnimationComplete && window.innerWidth > 768) {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+        }
+
+        // Hero text animation with glass morphism effect
+        function handleHeroScroll(e) {
+            // Skip on mobile
+            if (window.innerWidth <= 768) {
+                return;
+            }
+
+            if (!heroTextAnimationComplete) {
+                // Prevent default scroll
+                if (e) {
+                    e.preventDefault();
+                }
+                
+                const overlay = document.querySelector('.hero-overlay');
+                
+                // Get scroll delta
+                let delta = 0;
+                if (e.type === 'wheel') {
+                    delta = e.deltaY;
+                } else if (e.type === 'touchmove') {
+                    return;
+                }
+                
+                // Accumulate scroll (smoother progression)
+                accumulatedScroll = Math.max(0, Math.min(accumulatedScroll + delta, MAX_SCROLL_FOR_ANIMATION));
+                
+                // Calculate animation progress (0 to 1) with easing
+                const rawProgress = accumulatedScroll / MAX_SCROLL_FOR_ANIMATION;
+                // Apply easing for smoother feel
+                const progress = rawProgress * rawProgress * (3 - 2 * rawProgress); // smoothstep
+                
+                // Glass morphism effect - grows from bottom to top
+                const glassHeight = progress * 100; // percentage
+                const blurAmount = progress * 20; // max 20px blur
+                const darkenAmount = progress * 0.5; // max 50% darken
+                
+                if (overlay) {
+                    // Create gradient that grows from bottom
+                    overlay.style.background = `
+                        linear-gradient(
+                            to top,
+                            rgba(0, 0, 0, ${darkenAmount}) 0%,
+                            rgba(0, 0, 0, ${darkenAmount * 0.7}) ${glassHeight}%,
+                            transparent ${glassHeight + 10}%,
+                            transparent 100%
+                        )
+                    `;
+                    overlay.style.backdropFilter = `blur(${blurAmount}px)`;
+                    overlay.style.webkitBackdropFilter = `blur(${blurAmount}px)`;
+                }
+                
+                // Trigger AOS animations based on progress
+                if (rawProgress >= 0.2) {
+                    // Refresh AOS to trigger animations
+                    AOS.refresh();
+                }
+                
+                // Mark animation complete when progress reaches near 100%
+                if (rawProgress >= 0.95) {
+                    heroTextAnimationComplete = true;
+                    document.body.classList.remove('hero-animating');
+                    // Remove event listeners
+                    window.removeEventListener('wheel', handleHeroScroll, { passive: false });
+                    window.removeEventListener('scroll', preventScroll, { passive: false });
+                    document.removeEventListener('touchmove', preventScroll, { passive: false });
+                }
+            }
+        }
+
+        // Add wheel event listener for scroll detection
+        if (window.innerWidth > 768) {
+            window.addEventListener('wheel', handleHeroScroll, { passive: false });
+            window.addEventListener('scroll', preventScroll, { passive: false });
+            document.addEventListener('touchmove', preventScroll, { passive: false });
+        }
+
+        // Main scroll event handler
         window.addEventListener('scroll', function() {
-            const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
+            // Scroll to top button
+            const scrollToTopBtn = document.getElementById('scrollToTop');
+            if (window.scrollY > 300) {
+                scrollToTopBtn.classList.add('show');
             } else {
-                navbar.classList.remove('scrolled');
+                scrollToTopBtn.classList.remove('show');
             }
         });
+
+        // Video autoplay fallback for mobile
+        const video = document.getElementById('hero-video');
+        if (video) {
+            video.play().catch(function(error) {
+                console.log('Video autoplay prevented on this device');
+            });
+        }
 
         // Fade-in animation on scroll
         const observerOptions = {
@@ -1432,14 +1572,6 @@
             observer.observe(element);
         });
 
-        // Video autoplay fallback for mobile
-        const video = document.getElementById('hero-video');
-        if (video) {
-            video.play().catch(function(error) {
-                console.log('Video autoplay prevented on this device');
-            });
-        }
-
         // Contact form submission
         document.querySelector('.contact-form').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -1453,6 +1585,12 @@
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
+                    // If clicking nav link before animation completes, complete it first
+                    if (!heroTextAnimationComplete) {
+                        heroTextAnimationComplete = true;
+                        document.body.classList.remove('hero-animating');
+                    }
+                    
                     const navHeight = document.querySelector('.navbar').offsetHeight;
                     const targetPosition = target.offsetTop - navHeight;
                     window.scrollTo({
@@ -1472,15 +1610,30 @@
         // Scroll to top button
         const scrollToTopBtn = document.getElementById('scrollToTop');
         
-        window.addEventListener('scroll', function() {
-            if (window.scrollY > 300) {
-                scrollToTopBtn.classList.add('show');
-            } else {
-                scrollToTopBtn.classList.remove('show');
-            }
-        });
-
         scrollToTopBtn.addEventListener('click', function() {
+            // Reset animation state
+            heroTextAnimationComplete = false;
+            accumulatedScroll = 0;
+            document.body.classList.add('hero-animating');
+            
+            const overlay = document.querySelector('.hero-overlay');
+            
+            if (overlay) {
+                overlay.style.background = 'linear-gradient(to top, rgba(0, 0, 0, 0) 0%, transparent 100%)';
+                overlay.style.backdropFilter = 'blur(0px)';
+                overlay.style.webkitBackdropFilter = 'blur(0px)';
+            }
+            
+            // Reset AOS animations
+            AOS.refreshHard();
+            
+            // Re-add event listeners
+            if (window.innerWidth > 768) {
+                window.addEventListener('wheel', handleHeroScroll, { passive: false });
+                window.addEventListener('scroll', preventScroll, { passive: false });
+                document.addEventListener('touchmove', preventScroll, { passive: false });
+            }
+            
             window.scrollTo({
                 top: 0,
                 behavior: 'smooth'
